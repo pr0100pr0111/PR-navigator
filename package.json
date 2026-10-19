@@ -1,0 +1,209 @@
+{
+  "name": "pr-navigator",
+  "displayName": "PR Navigator",
+  "description": "Структурированный локальный code review для Git-сравнений",
+  "version": "0.1.0",
+  "publisher": "local-pr-navigator",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "SCM Providers",
+    "Other"
+  ],
+  "main": "./out/extension.js",
+  "activationEvents": [],
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "prNavigatorContainer",
+          "title": "PR Navigator",
+          "icon": "media/pr-navigator.svg"
+        }
+      ]
+    },
+    "views": {
+      "prNavigatorContainer": [
+        {
+          "id": "prNavigator",
+          "name": "PR Navigator"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "prNavigator.startReview",
+        "title": "PR Navigator: Начать новую проверку"
+      },
+      {
+        "command": "prNavigator.openReview",
+        "title": "PR Navigator: Открыть сохранённую проверку"
+      },
+      {
+        "command": "prNavigator.refreshReview",
+        "title": "PR Navigator: Обновить проверку"
+      },
+      {
+        "command": "prNavigator.exportReport",
+        "title": "PR Navigator: Экспортировать отчёт (Markdown)"
+      },
+      {
+        "command": "prNavigator.changeStatus",
+        "title": "PR Navigator: Изменить статус файла"
+      },
+      {
+        "command": "prNavigator.markInProgress",
+        "title": "PR Navigator: Пометить как «В процессе»"
+      },
+      {
+        "command": "prNavigator.markReviewed",
+        "title": "PR Navigator: Пометить как «Проверен»"
+      },
+      {
+        "command": "prNavigator.markNeedsReReview",
+        "title": "PR Navigator: Пометить как «Требует повторной проверки»"
+      },
+      {
+        "command": "prNavigator.markNotReviewed",
+        "title": "PR Navigator: Пометить как «Не просмотрен»"
+      },
+      {
+        "command": "prNavigator.openDiff",
+        "title": "PR Navigator: Открыть diff"
+      },
+      {
+        "command": "prNavigator.addFileNote",
+        "title": "PR Navigator: Добавить заметку к файлу"
+      },
+      {
+        "command": "prNavigator.addLineNote",
+        "title": "PR Navigator: Добавить заметку к строке"
+      },
+      {
+        "command": "prNavigator.manageNotes",
+        "title": "PR Navigator: Заметки файла"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "prNavigator.markInProgress",
+          "when": "false"
+        },
+        {
+          "command": "prNavigator.markReviewed",
+          "when": "false"
+        },
+        {
+          "command": "prNavigator.markNeedsReReview",
+          "when": "false"
+        },
+        {
+          "command": "prNavigator.markNotReviewed",
+          "when": "false"
+        },
+        {
+          "command": "prNavigator.openDiff",
+          "when": "false"
+        },
+        {
+          "command": "prNavigator.addFileNote",
+          "when": "false"
+        },
+        {
+          "command": "prNavigator.manageNotes",
+          "when": "false"
+        },
+        {
+          "command": "prNavigator.addLineNote",
+          "when": "editorTextFocus"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "prNavigator.refreshReview",
+          "group": "navigation",
+          "when": "view == prNavigator"
+        },
+        {
+          "command": "prNavigator.startReview",
+          "group": "navigation",
+          "when": "view == prNavigator"
+        },
+        {
+          "command": "prNavigator.openReview",
+          "group": "navigation",
+          "when": "view == prNavigator"
+        },
+        {
+          "command": "prNavigator.exportReport",
+          "group": "navigation",
+          "when": "view == prNavigator"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "prNavigator.markInProgress",
+          "group": "1_status",
+          "when": "viewItem == prNavigatorFile"
+        },
+        {
+          "command": "prNavigator.markReviewed",
+          "group": "1_status",
+          "when": "viewItem == prNavigatorFile"
+        },
+        {
+          "command": "prNavigator.markNeedsReReview",
+          "group": "1_status",
+          "when": "viewItem == prNavigatorFile"
+        },
+        {
+          "command": "prNavigator.markNotReviewed",
+          "group": "1_status",
+          "when": "viewItem == prNavigatorFile"
+        },
+        {
+          "command": "prNavigator.addFileNote",
+          "group": "2_notes",
+          "when": "viewItem == prNavigatorFile"
+        },
+        {
+          "command": "prNavigator.manageNotes",
+          "group": "2_notes",
+          "when": "viewItem == prNavigatorFile"
+        },
+        {
+          "command": "prNavigator.openDiff",
+          "group": "3_navigation",
+          "when": "viewItem == prNavigatorFile"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "prNavigator.addLineNote",
+          "group": "prNavigator",
+          "when": "editorTextFocus"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p tsconfig.json",
+    "watch": "tsc -w -p tsconfig.json",
+    "typecheck": "tsc --noEmit -p tsconfig.test.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint .",
+    "vscode:prepublish": "npm run compile"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.2",
+    "@types/vscode": "^1.90.0",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "eslint": "^8.57.1",
+    "typescript": "5.9",
+    "vitest": "^5.0.5"
+  }
+}
